@@ -1,0 +1,39 @@
+listen {
+  type = auth
+  ipaddr = *
+  port = 1812
+  virtual_server = default
+}
+
+listen {
+  type = acct
+  ipaddr = *
+  port = 1813
+  virtual_server = default
+}
+
+server default {
+  authorize {
+    files
+    sql
+    pap
+  }
+  authenticate {
+    Auth-Type PAP {
+      pap
+    }
+  }
+  session {
+    sql
+  }
+  accounting {
+    detail
+    sql
+    unix
+    exec
+    attr_filter.accounting_response
+  }
+  post-auth {
+    sql
+  }
+}

@@ -1,0 +1,56 @@
+services:
+  postgres:
+    build: ./postgres
+    environment:
+      POSTGRES_DB: freeradius
+      POSTGRES_USER: freeradius
+      POSTGRES_PASSWORD: freeradius
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "freeradius"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@localhost.localdomain
+      PGADMIN_DEFAULT_PASSWORD: changeme
+      PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION: "True"
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+    ports:
+      - "5050:80"
+    volumes:
+      - ./pgadmin/data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  freeradius:
+    build: ./freeradius
+    restart: unless-stopped
+    environment:
+      PGPASSWORD: freeradius
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  ocserv:
+    build: ./ocserv
+    ports:
+      - "443:443/tcp"
+      - "443:443/udp"
+    devices:
+      - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      net.ipv4.ip_forward: "1"
+    restart: unless-stopped
+    depends_on:
+      - freeradius

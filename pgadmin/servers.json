@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "PostgreSQL (freeradius)",
+      "Group": "Servers",
+      "Host": "postgres",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "freeradius",
+      "SSLMode": "prefer"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+sql {
+  dialect = "postgresql"
+  driver = "rlm_sql_${dialect}"
+
+  radius_db = "freeradius"
+  login     = "freeradius"
+  password  = "freeradius"
+  server    = "postgres"
+  port      = 5432
+
+  pool {
+    start = 10
+    min   = 10
+    max   = 100
+    spare = 0
+    uses  = 0
+    lifetime = 0
+    cleanup_interval = 30
+    max_retries = 5
+  }
+
+  read_clients = yes
+
+  acct_table1       = "radacct"
+  acct_table2       = "radacct"
+  postauth_table    = "radpostauth"
+  authcheck_table   = "radcheck"
+  authreply_table   = "radreply"
+  groupcheck_table  = "radgroupcheck"
+  groupreply_table  = "radgroupreply"
+  usergroup_table   = "radusergroup"
+  client_table      = "nas"
+
+  group_attribute   = "SQL-Group"
+  group_membership_query = "SELECT groupname FROM radusergroup WHERE username = '%{SQL-User-Name}' ORDER BY priority"
+
+  $INCLUDE ${modconfdir}/${.:name}/main/${dialect}/queries.conf
+}
