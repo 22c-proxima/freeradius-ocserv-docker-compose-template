@@ -12,6 +12,8 @@ RUN cd ocserv && ./autogen.sh && ./configure && make && make install
 COPY etc /etc
 RUN chmod -R 600 /etc/ocserv/*
 RUN chmod 600 /etc/radcli/servers && chmod 640 /etc/radcli/radiusclient.conf
+# Для лимитов полосы канала
+RUN sed -i -E 's/^#(\$INCLUDE[[:space:]]+\/etc\/radcli\/dictionary\.roaringpenguin)/\1/' /etc/radcli/dictionary
 
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]

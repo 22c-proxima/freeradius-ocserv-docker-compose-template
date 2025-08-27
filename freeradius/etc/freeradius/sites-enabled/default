@@ -14,7 +14,6 @@ listen {
 
 server default {
   authorize {
-    files
     sql
     pap
   }
@@ -27,11 +26,8 @@ server default {
     sql
   }
   accounting {
-    detail
+    acct_unique
     sql
-    unix
-    exec
-    attr_filter.accounting_response
   }
   post-auth {
     sql
