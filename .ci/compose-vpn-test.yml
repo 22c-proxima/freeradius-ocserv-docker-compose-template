@@ -1,0 +1,6 @@
+services:
+  vpn-test:
+    build: .ci
+    privileged: true
+    depends_on:
+      - ocserv
