@@ -16,4 +16,5 @@ RUN chmod 600 /etc/radcli/servers && chmod 640 /etc/radcli/radiusclient.conf
 RUN sed -i -E 's/^#(\$INCLUDE[[:space:]]+\/etc\/radcli\/dictionary\.roaringpenguin)/\1/' /etc/radcli/dictionary
 
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
