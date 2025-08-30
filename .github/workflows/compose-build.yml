@@ -27,7 +27,7 @@ jobs:
 
       - name: Check VPN connection
         run: |
-          docker compose exec -d vpn-test openconnect --protocol=anyconnect --user=test --passwd-on-stdin --servercert pin-sha256:BxSbjiiFR6PSD6O8DJ2fRFLXEG5ROLGQZAjWqmGFrlo= ocserv:443 <<< "test" &
+          docker compose exec -d vpn-test openconnect --protocol=anyconnect --user=test --passwd-on-stdin --servercert pin-sha256:BxSbjiiFR6PSD6O8DJ2fRFLXEG5ROLGQZAjWqmGFrlo= ocserv:443 <<< "test1" &
           sleep 10
 
       - name: Check internet access through VPN
