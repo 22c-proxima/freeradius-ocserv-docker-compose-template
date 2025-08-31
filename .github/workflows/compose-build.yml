@@ -26,4 +26,4 @@ jobs:
         run: docker compose -f compose.yml -f .ci/compose-vpn-test.yml up --build -d
 
       - name: Check VPN connection
-        run: docker compose exec vpn-test openconnect --protocol=anyconnect --user=test --passwd-on-stdin ocserv:443 <<< "test\nyes"
+        run: docker compose exec -T vpn-test openconnect --protocol=anyconnect --no --user=test --passwd-on-stdin ocserv:443 <<< "test\nyes"
