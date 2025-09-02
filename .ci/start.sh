@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "test" | openconnect --protocol=anyconnect --user=test \
+    --servercert pin-sha256:e6VOKgrnF3P/+l7J//KboB1WB+zdEJthM4atcyaV0nA= \
+    --passwd-on-stdin ocserv:443 &
+
+VPN_PID=$!
+sleep 10
+
+# Проверка доступа к интернету через VPN
+curl -s https://api.ipify.org > /dev/null
+RESULT=$?
+
+kill $VPN_PID
+
+if [ $RESULT -eq 0 ]; then
+  echo "VPN и интернет работают!"
+  exit 0
+else
+  echo "Ошибка VPN или интернет недоступен!"
+  exit 1
+fi
