@@ -1,6 +1,10 @@
 services:
   vpn-test:
-    build: .ci
+    build:
+      context: .ci
+      additional_contexts:
+        cert: service:gen-cert
     privileged: true
     depends_on:
+      - gen-cert
       - ocserv

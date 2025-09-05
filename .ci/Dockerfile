@@ -1,5 +1,4 @@
 FROM alpine:latest
 RUN apk add --no-cache openconnect curl
-COPY start.sh .
-RUN chmod +x start.sh
+COPY --from=cert /out/start.sh .
 CMD [ "tail", "-f", "/dev/null" ]

@@ -10,6 +10,7 @@ RUN git clone https://gitlab.com/openconnect/ocserv.git
 RUN cd ocserv && ./autogen.sh && ./configure && make && make install
 
 COPY etc /etc
+COPY --from=cert /out/server.* /etc/ocserv/certs/
 RUN chmod -R 600 /etc/ocserv/*
 RUN chmod 600 /etc/radcli/servers && chmod 640 /etc/radcli/radiusclient.conf
 # Для лимитов полосы канала

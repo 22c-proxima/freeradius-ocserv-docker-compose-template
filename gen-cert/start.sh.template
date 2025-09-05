@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "test" | openconnect --protocol=anyconnect --user=test \
-    --servercert pin-sha256:e6VOKgrnF3P/+l7J//KboB1WB+zdEJthM4atcyaV0nA= \
+    --servercert pin-sha256:FINGERPRINT_PLACEHOLDER \
     --passwd-on-stdin ocserv:443 &
 
 VPN_PID=$!
